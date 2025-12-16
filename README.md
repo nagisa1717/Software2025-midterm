@@ -3,7 +3,7 @@
 Pythonで自販機の簡単なモデルを作成した．
 
 プログラム本体「vendingMachine.py」とテストケース「test_vendingMachine.py」の2つから構成されている．
-TDDの正典(https://tidyfirst.substack.com/p/canon-tdd)に記載のステップを踏襲して開発を進めた．
+[TDDの正典](https://tidyfirst.substack.com/p/canon-tdd)に記載のステップを踏襲して開発を進めた．
 
 ## ステップ1　テストシナリオのリストを作成
 vendingMachine.pyがカバーするべき項目を列挙します．
