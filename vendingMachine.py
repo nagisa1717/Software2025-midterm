@@ -9,3 +9,5 @@ class VendingMachine():
             "tea": maxStock,
             "coke": maxStock
         }
+    def insert_money(money):
+        self.payment += money
