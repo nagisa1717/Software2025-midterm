@@ -20,7 +20,8 @@ class VendingMachine():
         if self.can_buy(drink_name):
             self.payment -= self.drinks[drink_name]["price"]
             self.drinks[drink_name]["stock"] -= 1
-            return drink_name
+            change = self.get_change()
+            return drink_name, change
         else:
             return None
     def get_change(self):
