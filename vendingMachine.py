@@ -1,14 +1,18 @@
 #プログラム本文．自販機のシミュレーションを作成する．
 maxStock = 5
+waterPrice = 100
+teaPrice = 130
+cokePrice = 150
+coffeePrice = 180
 
 class VendingMachine():
     def __init__(self):
         self.payment = 0
         self.drinks = {
-            "water": {"stock": maxStock, "price":100},
-            "tea": {"stock": maxStock, "price":130},
-            "coke": {"stock": maxStock, "price":150},
-            "coffee": {"stock": maxStock, "price":180}
+            "water": {"stock": maxStock, "price":waterPrice},
+            "tea": {"stock": maxStock, "price":teaPrice},
+            "coke": {"stock": maxStock, "price":cokePrice},
+            "coffee": {"stock": maxStock, "price":coffeePrice}
         }
     def insert_money(self, money):
         self.payment += money
