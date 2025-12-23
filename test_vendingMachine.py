@@ -10,13 +10,13 @@ def test01(vm):
 def test02(vm):
     before_payment = vm.payment
     vm.insert_money(100)
-    assert vm.payment = before_payment + 100
+    assert vm.payment == before_payment + 100
 
     for i in range(10):
         before_payment = vm.payment
         money = random.randint(1,10000)
         vm.insert_money(money)
-        assert vm.payment = before_payment + money
+        assert vm.payment == before_payment + money
 
 if __name__ == "__main__":
     print("-------テスト開始-------")
@@ -24,5 +24,7 @@ if __name__ == "__main__":
 
     test01(vm1)
     print("test1: OK")
+    test02(vm1)
+    print("test2: OK")
 
     print("--全てのテストをクリア--")
