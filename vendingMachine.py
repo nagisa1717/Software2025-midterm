@@ -18,3 +18,7 @@ class VendingMachine():
             return drink
         else:
             return None
+    def get_change(self):
+        change = self.payment
+        self.payment = 0
+        return change
