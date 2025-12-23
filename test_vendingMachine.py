@@ -70,12 +70,6 @@ def test04():
     assert vm3.payment == 100
     assert vm3.drinks["coke"]["stock"] == vendingMachine.maxStock
 
-'''
-ユーザーが在庫不足の飲み物のボタンを押すと，
-・ユーザーは何も入手しない．
-・飲み物の在庫は変化しない．
-・自販機内のお金は変化しない．
-'''
 def test05():
     vm1 = vendingMachine.VendingMachine()
     vm1.insert_money(1000)
@@ -92,7 +86,26 @@ def test05():
             assert result == None
             assert vm1.payment == 1000 - vm1.drinks["water"]["price"] * buy_count
             assert vm1.drinks["water"]["stock"] == 0
+'''
+ユーザーがお釣りのボタンを押すと，
+・ユーザーはお釣りを入手する．
+・自販機内のお金が0円に戻る．
+'''
 
+def test06():
+    vm1 = vendingMachine.VendingMachine()
+    vm1.insert_money(200)
+    result = vm1.get_change()
+    assert result == 200
+    assert vm1.payment == 0
+
+    vm2 = vendingMachine.VendingMachine()
+    vm2.insert_money(1000)
+    vm2.buy_drinks("water")
+    vm2.buy_drinks("coke")
+    result = vm2.get_change()
+    assert result == 1000 - (vm2.drinks["water"]["price"] + vm2.drinks["coke"]["price"])
+    assert vm2.payment == 0
 
 if __name__ == "__main__":
     print("-------テスト開始-------")
@@ -107,5 +120,7 @@ if __name__ == "__main__":
     print("test4: OK")
     test05()
     print("test5: OK")
+    test06()
+    print("test6: OK")
 
     print("--全てのテストをクリア--")
