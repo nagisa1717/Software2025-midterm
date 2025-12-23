@@ -12,7 +12,7 @@ class VendingMachine():
     def insert_money(self, money):
         self.payment += money
     def buy_drinks(self, drink):
-        if self.payment >= self.drinks[drink]["price"]:
+        if self.payment >= self.drinks[drink]["price"] and self.drinks[drink]["stock"] > 0:
             self.payment -= self.drinks[drink]["price"]
             self.drinks[drink]["stock"] -= 1
             return drink
