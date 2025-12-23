@@ -103,6 +103,20 @@ def test_get_change(): #項目6のテスト
     assert result == 1000 - (vm2.drinks["water"]["price"] + vm2.drinks["coke"]["price"])
     assert vm2.payment == 0
 
+def test_buy_coffee():
+    vm1 = vendingMachine.VendingMachine()
+    vm1.insert_money(150)
+    result = vm1.buy("coffee")
+    assert result == None
+    assert vm1.payment == 150
+    assert vm1.drinks["coffee"]["stock"] == MaxStock
+
+    vm1.insert_money(50)
+    result = vm1.buy("coffee")
+    assert result == "coffee"
+    assert vm1.payment == 150 + 50 - vm1.drinks["coffee"]["price"]
+    assert vm1.drinks["coffee"]["stock"] == MaxStock - 1
+
 if __name__ == "__main__":
     print("-------テスト開始-------")
     
@@ -118,5 +132,7 @@ if __name__ == "__main__":
     print("test5: OK")
     test_get_change()
     print("test6: OK")
+    test_buy_coffee()
+    print("test-コーヒーの購入: OK")
 
     print("--全てのテストをクリア--")
