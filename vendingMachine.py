@@ -11,11 +11,15 @@ class VendingMachine():
         }
     def insert_money(self, money):
         self.payment += money
-    def buy_drinks(self, drink):
-        if self.payment >= self.drinks[drink]["price"] and self.drinks[drink]["stock"] > 0:
-            self.payment -= self.drinks[drink]["price"]
-            self.drinks[drink]["stock"] -= 1
-            return drink
+    def can_buy(self, drink_name):
+        return self.payment >= self.drinks[drink_name]["price"] and self.drinks[drink_name]["stock"] > 0
+    def buy(self, drink_name):
+        if drink_name not in self.drinks:
+            raise ValueError("Unknown drink")
+        if self.can_buy(drink_name):
+            self.payment -= self.drinks[drink_name]["price"]
+            self.drinks[drink_name]["stock"] -= 1
+            return drink_name
         else:
             return None
     def get_change(self):
