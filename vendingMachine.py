@@ -16,3 +16,5 @@ class VendingMachine():
             self.payment -= self.drinks[drink]["price"]
             self.drinks[drink]["stock"] -= 1
             return drink
+        else:
+            return None
