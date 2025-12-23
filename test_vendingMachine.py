@@ -3,6 +3,7 @@ import vendingMachine
 import random
 MaxStock = vendingMachine.maxStock
 
+
 def test_init(): #項目1のテスト
     vm = vendingMachine.VendingMachine()
     assert vm.payment == 0
@@ -21,6 +22,7 @@ def test_insert_money(): #項目2のテスト
         vm.insert_money(money)
         assert vm.payment == before_payment + money
 
+'''仕様の変更により削除
 def test_can_buy(): #項目3のテスト
     # water
     vm1 = vendingMachine.VendingMachine()
@@ -44,6 +46,36 @@ def test_can_buy(): #項目3のテスト
     result = vm3.buy("coke")
     assert result == "coke"
     assert vm3.payment == 200 - vm3.drinks["coke"]["price"]
+    assert vm3.drinks["coke"]["stock"] == MaxStock - 1
+'''
+
+def test_can_buy():
+    # 仕様変更後に項目3をテストする
+    # water
+    vm1 = vendingMachine.VendingMachine()
+    vm1.insert_money(100)
+    drink, change = vm1.buy("water")
+    assert drink == "water"
+    assert vm1.payment == 0
+    assert change == 100 - vm1.drinks["water"]["price"]
+    assert vm1.drinks["water"]["stock"] == MaxStock - 1
+
+    # tea
+    vm2 = vendingMachine.VendingMachine()
+    vm2.insert_money(150)
+    drink, change = vm2.buy("tea")
+    assert drink == "tea"
+    assert change == 150 - vm1.drinks["tea"]["price"]
+    assert vm2.payment == 0
+    assert vm2.drinks["tea"]["stock"] == MaxStock - 1
+
+    # coke
+    vm3 = vendingMachine.VendingMachine()
+    vm3.insert_money(200)
+    drink, change = vm3.buy("coke")
+    assert drink == "coke"
+    assert change == 200 - vm1.drinks["coke"]["price"]
+    assert vm3.payment == 0
     assert vm3.drinks["coke"]["stock"] == MaxStock - 1
 
 def test_cannot_buy(): #項目4のテスト
@@ -71,6 +103,8 @@ def test_cannot_buy(): #項目4のテスト
     assert vm3.payment == 100
     assert vm3.drinks["coke"]["stock"] == MaxStock
 
+'''
+仕様の変更により削除
 def test_lack_change(): #項目5のテスト
     vm1 = vendingMachine.VendingMachine()
     vm1.insert_money(1000)
@@ -87,14 +121,37 @@ def test_lack_change(): #項目5のテスト
             assert result == None
             assert vm1.payment == 1000 - vm1.drinks["water"]["price"] * buy_count
             assert vm1.drinks["water"]["stock"] == 0
+'''
+
+def test_lack_change(): 
+    # 仕様変更後に項目5をテストする
+    vm1 = vendingMachine.VendingMachine()
+
+    buy_count = 0
+    for i in range(10):
+        vm1.insert_money(100)
+        if i < MaxStock:
+            drink, change = vm1.buy("water")
+            buy_count += 1
+            assert drink == "water"
+            assert vm1.drinks["water"]["stock"] == MaxStock - buy_count
+        else:
+            result = vm1.buy("water")
+            assert result == None
+            assert vm1.drinks["water"]["stock"] == 0
 
 def test_get_change(): #項目6のテスト
     vm1 = vendingMachine.VendingMachine()
+    result = vm1.get_change()
+    assert result == 0
+    assert vm1.payment == 0
+
     vm1.insert_money(200)
     result = vm1.get_change()
     assert result == 200
     assert vm1.payment == 0
 
+    '''仕様の変更に伴って削除
     vm2 = vendingMachine.VendingMachine()
     vm2.insert_money(1000)
     vm2.buy("water")
@@ -102,6 +159,7 @@ def test_get_change(): #項目6のテスト
     result = vm2.get_change()
     assert result == 1000 - (vm2.drinks["water"]["price"] + vm2.drinks["coke"]["price"])
     assert vm2.payment == 0
+    '''
 
 def test_buy_coffee():
     vm1 = vendingMachine.VendingMachine()
@@ -112,9 +170,12 @@ def test_buy_coffee():
     assert vm1.drinks["coffee"]["stock"] == MaxStock
 
     vm1.insert_money(50)
-    result = vm1.buy("coffee")
-    assert result == "coffee"
-    assert vm1.payment == 150 + 50 - vm1.drinks["coffee"]["price"]
+    drink, change = vm1.buy("coffee")
+    assert drink == "coffee"
+    # --仕様に伴う変更--
+    assert change == 150 + 50 - vm1.drinks["coffee"]["price"]
+    assert vm1.payment == 0
+    #----
     assert vm1.drinks["coffee"]["stock"] == MaxStock - 1
 
 if __name__ == "__main__":
