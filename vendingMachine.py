@@ -7,7 +7,8 @@ class VendingMachine():
         self.drinks = {
             "water": {"stock": maxStock, "price":100},
             "tea": {"stock": maxStock, "price":130},
-            "coke": {"stock": maxStock, "price":150}
+            "coke": {"stock": maxStock, "price":150},
+            "coffee": {"stock": maxStock, "price":180}
         }
     def insert_money(self, money):
         self.payment += money
